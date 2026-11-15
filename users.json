@@ -1,0 +1,5 @@
+[
+  { "userId": 1, "nume": "Ana Popescu", "email": "ana.popescu@campus.ro", "rol": "Student", "rezervariSaptamana": 2 },
+  { "userId": 2, "nume": "Mihai Ionescu", "email": "mihai.ionescu@campus.ro", "rol": "Student", "rezervariSaptamana": 1 },
+  { "userId": 3, "nume": "Prof. Ion Vasilescu", "email": "ion.vasilescu@campus.ro", "rol": "Profesor", "rezervariSaptamana": 0 }
+]
