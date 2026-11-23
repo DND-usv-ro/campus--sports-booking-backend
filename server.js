@@ -1,31 +1,106 @@
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 
 const app = express();
 const PORT = 5000;
+const USERS_FILE = path.join(__dirname, "users.json");
 
-// Middleware (permite comunicarea între frontend și backend)
 app.use(cors());
 app.use(express.json());
 
-// Endpoint-ul care CITESTE din users.json si trimite lista spre front
-app.get("/api/users", (req, res) => {
-  const filePath = path.join(__dirname, "users.json");
+const readUsers = async () => {
+  const data = await fs.readFile(USERS_FILE, "utf8");
+  return JSON.parse(data);
+};
 
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      return res
-        .status(500)
-        .json({ error: "Eroare la citirea fișierului de utilizatori." });
-    }
-    // Trimite date format JSON SPRE cine le cere (frontend-ul)
-    res.json(JSON.parse(data));
-  });
+const writeUsers = async (users) => {
+  await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2), "utf8");
+};
+
+// GET: Listă utilizatori
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await readUsers();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: "Eroare la citirea utilizatorilor." });
+  }
 });
 
-// Pornirea serverului
+// POST: Autentificare (Login)
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, parola } = req.body;
+    const users = await readUsers();
+
+    const user = users.find(
+      (u) =>
+        u.email.toLowerCase() === email.toLowerCase() && u.parola === parola,
+    );
+
+    if (!user) {
+      return res.status(401).json({ error: "Email sau parolă incorectă." });
+    }
+
+    const { parola: _, ...userFaraParola } = user;
+    res.json({ message: "Autentificare reușită!", user: userFaraParola });
+  } catch (err) {
+    res.status(500).json({ error: "Eroare la autentificare." });
+  }
+});
+
+// POST: Înregistrare (Sign Up)
+app.post("/api/register", async (req, res) => {
+  try {
+    const { nume, email, parola, rol } = req.body;
+
+    if (!nume || !email || !parola) {
+      return res
+        .status(400)
+        .json({ error: "Toate câmpurile sunt obligatorii." });
+    }
+
+    if (!email.endsWith(".ro")) {
+      return res
+        .status(400)
+        .json({ error: "Folosește un email instituțional (.ro)." });
+    }
+
+    const users = await readUsers();
+    const exists = users.some(
+      (u) => u.email.toLowerCase() === email.toLowerCase(),
+    );
+
+    if (exists) {
+      return res
+        .status(400)
+        .json({ error: "Există deja un cont cu acest email." });
+    }
+
+    const newUser = {
+      userId:
+        users.length > 0 ? Math.max(...users.map((u) => u.userId)) + 1 : 1,
+      nume,
+      email,
+      parola,
+      rol: rol || "Student",
+      rezervariSaptamana: 0,
+    };
+
+    users.push(newUser);
+    await writeUsers(users);
+
+    const { parola: _, ...userFaraParola } = newUser;
+    res
+      .status(201)
+      .json({ message: "Cont creat cu succes!", user: userFaraParola });
+  } catch (err) {
+    res.status(500).json({ error: "Eroare la crearea contului." });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Backend-ul rulează pe http://localhost:${PORT}`);
 });
