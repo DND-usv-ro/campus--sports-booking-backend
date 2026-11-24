@@ -123,6 +123,95 @@ app.patch('/api/bookings/:id/cancel', async (req, res) => {
   }
 });
 
+
+// POST: Creare rezervare nouă (Student / Profesor)
+app.post('/api/bookings', async (req, res) => {
+  try {
+    const {
+      userId,
+      numeUtilizator,
+      emailUtilizator,
+      facilityId,
+      numeFacilitate,
+      locatie,
+      data,
+      intervalOrar,
+    } = req.body;
+
+    if (!userId || !facilityId || !data || !intervalOrar) {
+      return res.status(400).json({ error: 'Toate câmpurile rezervării sunt obligatorii.' });
+    }
+
+    const bookings = await readJsonFile(BOOKINGS_FILE);
+
+    // 1. Verificăm dacă intervalul este deja ocupat la acea facilitate și dată
+    const isOccupied = bookings.some(
+      (b) =>
+        b.facilityId === facilityId &&
+        b.data === data &&
+        b.intervalOrar === intervalOrar &&
+        b.status === 'Activa'
+    );
+
+    if (isOccupied) {
+      return res.status(409).json({ error: 'Acest interval orar este deja ocupat.' });
+    }
+
+    // 2. Verificăm limita de maxim 3 rezervări active pe săptămână pentru utilizator
+    const getWeekBounds = (dateString) => {
+      const d = new Date(dateString + 'T00:00:00');
+      const day = d.getDay();
+      const diffToMonday = day === 0 ? -6 : 1 - day;
+      const monday = new Date(d);
+      monday.setDate(d.getDate() + diffToMonday);
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      return {
+        start: monday.toISOString().split('T')[0],
+        end: sunday.toISOString().split('T')[0],
+      };
+    };
+
+    const { start, end } = getWeekBounds(data);
+    const weeklyActiveBookings = bookings.filter(
+      (b) =>
+        b.userId === userId &&
+        b.status === 'Activa' &&
+        b.data >= start &&
+        b.data <= end
+    );
+
+    if (weeklyActiveBookings.length >= 3) {
+      return res.status(400).json({
+        error: 'Ai atins limita de maxim 3 rezervări active pe săptămână.',
+      });
+    }
+
+    // 3. Salvăm rezervarea nouă în bookings.json
+    const newBooking = {
+      bookingId: bookings.length > 0 ? Math.max(...bookings.map((b) => b.bookingId)) + 1 : 1,
+      userId,
+      numeUtilizator,
+      emailUtilizator,
+      facilityId,
+      numeFacilitate,
+      locatie,
+      data,
+      intervalOrar,
+      status: 'Activa',
+    };
+
+    bookings.push(newBooking);
+    await writeJsonFile(BOOKINGS_FILE, bookings);
+
+    res.status(201).json({
+      message: 'Rezervarea a fost confirmată!',
+      booking: newBooking,
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Eroare la salvarea rezervării.' });
+  }
+});
 app.listen(PORT, () => {
   console.log(`Backend-ul rulează pe http://localhost:${PORT}`);
 });

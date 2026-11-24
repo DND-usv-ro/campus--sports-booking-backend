@@ -46,5 +46,41 @@
     "data": "2026-11-25",
     "intervalOrar": "11:00 - 12:00",
     "status": "Activa"
+  },
+  {
+    "bookingId": 5,
+    "userId": 6,
+    "numeUtilizator": "Hreceniuc Damaris",
+    "emailUtilizator": "damaris.hreceniuc@student.usv.ro",
+    "facilityId": 1,
+    "numeFacilitate": "Bazin",
+    "locatie": "Complex sportiv • Corp A",
+    "data": "2026-11-23",
+    "intervalOrar": "08:00 - 09:00",
+    "status": "Activa"
+  },
+  {
+    "bookingId": 6,
+    "userId": 6,
+    "numeUtilizator": "Hreceniuc Damaris",
+    "emailUtilizator": "damaris.hreceniuc@student.usv.ro",
+    "facilityId": 2,
+    "numeFacilitate": "Fitness",
+    "locatie": "Sală de fitness • Corp B",
+    "data": "2026-11-25",
+    "intervalOrar": "09:30 - 10:30",
+    "status": "Activa"
+  },
+  {
+    "bookingId": 7,
+    "userId": 6,
+    "numeUtilizator": "Hreceniuc Damaris",
+    "emailUtilizator": "damaris.hreceniuc@student.usv.ro",
+    "facilityId": 2,
+    "numeFacilitate": "Fitness",
+    "locatie": "Sală de fitness • Corp B",
+    "data": "2026-11-23",
+    "intervalOrar": "09:30 - 10:30",
+    "status": "Activa"
   }
 ]
