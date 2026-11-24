@@ -26,7 +26,7 @@
   {
     "userId": 4,
     "nume": "Admin Campus",
-    "email": "admin@campus.ro",
+    "email": "admin@usv.ro",
     "parola": "admin123",
     "rol": "Admin",
     "rezervariSaptamana": 0

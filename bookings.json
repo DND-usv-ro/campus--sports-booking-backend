@@ -1,0 +1,50 @@
+[
+  {
+    "bookingId": 1,
+    "userId": 1,
+    "numeUtilizator": "Ana Popescu",
+    "emailUtilizator": "ana.popescu@campus.ro",
+    "facilityId": 1,
+    "numeFacilitate": "Bazin",
+    "locatie": "Complex sportiv • Corp A",
+    "data": "2026-11-24",
+    "intervalOrar": "17:00 - 18:00",
+    "status": "Activa"
+  },
+  {
+    "bookingId": 2,
+    "userId": 2,
+    "numeUtilizator": "Mihai Ionescu",
+    "emailUtilizator": "mihai.ionescu@campus.ro",
+    "facilityId": 2,
+    "numeFacilitate": "Fitness",
+    "locatie": "Sală de fitness • Corp B",
+    "data": "2026-11-24",
+    "intervalOrar": "09:30 - 10:30",
+    "status": "Activa"
+  },
+  {
+    "bookingId": 3,
+    "userId": 1,
+    "numeUtilizator": "Ana Popescu",
+    "emailUtilizator": "ana.popescu@campus.ro",
+    "facilityId": 3,
+    "numeFacilitate": "Fotbal",
+    "locatie": "Teren principal",
+    "data": "2026-11-24",
+    "intervalOrar": "14:00 - 15:00",
+    "status": "Activa"
+  },
+  {
+    "bookingId": 4,
+    "userId": 3,
+    "numeUtilizator": "Prof. Ion Vasilescu",
+    "emailUtilizator": "ion.vasilescu@campus.ro",
+    "facilityId": 4,
+    "numeFacilitate": "Baschet",
+    "locatie": "Sală polivalentă • Corp C",
+    "data": "2026-11-25",
+    "intervalOrar": "11:00 - 12:00",
+    "status": "Activa"
+  }
+]
