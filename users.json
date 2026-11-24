@@ -1,0 +1,50 @@
+[
+  {
+    "userId": 1,
+    "nume": "Ana Popescu",
+    "email": "ana.popescu@campus.ro",
+    "parola": "123456",
+    "rol": "Student",
+    "rezervariSaptamana": 2
+  },
+  {
+    "userId": 2,
+    "nume": "Mihai Ionescu",
+    "email": "mihai.ionescu@campus.ro",
+    "parola": "123456",
+    "rol": "Student",
+    "rezervariSaptamana": 1
+  },
+  {
+    "userId": 3,
+    "nume": "Prof. Ion Vasilescu",
+    "email": "ion.vasilescu@campus.ro",
+    "parola": "123456",
+    "rol": "Profesor",
+    "rezervariSaptamana": 0
+  },
+  {
+    "userId": 4,
+    "nume": "Admin Campus",
+    "email": "admin@usv.ro",
+    "parola": "admin123",
+    "rol": "Admin",
+    "rezervariSaptamana": 0
+  },
+  {
+    "userId": 5,
+    "nume": "Bolohan Denisa",
+    "email": "denisa.bolohan@student.usv.ro",
+    "parola": "ASINED13",
+    "rol": "Student",
+    "rezervariSaptamana": 0
+  },
+  {
+    "userId": 6,
+    "nume": "Hreceniuc Damaris",
+    "email": "damaris.hreceniuc@student.usv.ro",
+    "parola": "Student330205",
+    "rol": "Student",
+    "rezervariSaptamana": 0
+  }
+]
